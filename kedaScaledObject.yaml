@@ -1,0 +1,25 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: aws-sqs-queue-scaledobject
+  namespace: keda
+spec:
+  scaleTargetRef:
+    name: <app_name>  //name of the app that HPA needs to enable
+  minReplicaCount: 1
+  maxReplicaCount: 4
+  triggers:
+  - type: aws-sqs-queue
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      queueURL: <SQS QUEUE URL>  //get from aws sqs
+      queueLength: "500" //number of message 
+      awsRegion: "us-east-2" //location
+  - type: aws-sqs-queue  // for multiple parameter
+    authenticationRef:
+      name: keda-trigger-auth-aws-credentials
+    metadata:
+      queueURL: <SQS QUEUE URL>  
+      queueLength: "500"
+      awsRegion: "us-east-2" 
