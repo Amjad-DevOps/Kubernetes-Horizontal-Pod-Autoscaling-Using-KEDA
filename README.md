@@ -27,4 +27,20 @@ kubectl logs -n keda {keda-pod-name}
 ```
 kubectl apply -f kedaSecret.yaml
 ```
-3. 
+
+3. Create a Trigger Authentication
+```
+kubectl apply -f kedaTriggerAuth.yaml
+```
+
+4. Create KEDA Scaler (SQS) using the ScaledObject
+```
+kubectl apply -f kedaScaledObject.yaml
+```
+
+5. Validate 
+```
+kubectl get hpa -n keda
+
+kubectl get scaledobject -n keda
+```   
